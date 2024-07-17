@@ -1,0 +1,207 @@
+<!-- coa_quiz.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Computer Organization and Architecture Quiz</title>
+    <style>
+        /* Styles for quiz */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        .quiz-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: linear-gradient(to bottom, #f6c3d2);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .option {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .option:hover {
+            background-color: #f0f0f0;
+        }
+        .answer {
+            margin-top: 20px;
+            background-color: #fff;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            display: none;
+        }
+        .show-answer {
+            margin-top: 10px;
+            text-align: center;
+            cursor: pointer;
+            color: #007bff;
+            text-decoration: underline;
+        }
+        body {
+            background: linear-gradient(to bottom, #f6c3d2, #4597ec);
+        }
+        .messages {
+                height: 400px;
+                overflow-y: auto;
+            }
+          .btn {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-top: 10px;
+    font-size: 18px;
+    text-decoration: none;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+    body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+   background: linear-gradient(to bottom, #f6c3d2, #4597ec);
+  }
+
+  .chat-messages {
+    height: 400px;
+    overflow-y: auto;
+  }
+
+  header, footer {
+    background: linear-gradient(to bottom, #f6c3d2);
+    color: #fff;
+    text-align: center;
+    padding: 3px;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .logo {
+    max-width: 150px;
+    height: auto;
+  }
+
+  header {
+    top: 0;
+  }
+
+  footer {
+    bottom: 0;
+  }
+    </style>
+</head>
+<body>
+{% load static %}
+    <header style="color: black;">
+            <img src="{% static 'images/logo.png' %}" alt="Your Logo" class="logo">
+
+            <div style="flex: 1;"></div>
+            <a href="/signout" class="btn" style="background-color: #28a745;">Log out</a>
+        </header>
+    <div class="quiz-container">
+        <h1>Computer Organization and Architecture Quiz</h1>
+        <!-- Question 1 -->
+        <div class="question">
+            <p>1. What is the main function of a CPU?</p>
+            <div class="options">
+                <div class="option">A. Execute instructions</div>
+                <div class="option">B. Store data</div>
+                <div class="option">C. Manage input/output devices</div>
+                <div class="option">D. None of the above</div>
+            </div>
+            <div class="answer">
+                <p><strong>Answer:</strong> A. Execute instructions</p>
+            </div>
+            <div class="show-answer">Show Answer</div>
+        </div>
+
+        <!-- Question 2 -->
+        <div class="question">
+            <p>2. Which of the following components is responsible for temporarily storing data and instructions during processing?</p>
+            <div class="options">
+                <div class="option">A. Hard Disk</div>
+                <div class="option">B. RAM</div>
+                <div class="option">C. CPU</div>
+                <div class="option">D. ROM</div>
+            </div>
+            <div class="answer">
+                <p><strong>Answer:</strong> B. RAM</p>
+            </div>
+            <div class="show-answer">Show Answer</div>
+        </div>
+        
+        <!-- Question 3 -->
+        <div class="question">
+            <p>3. Which of the following is NOT a characteristic of RISC (Reduced Instruction Set Computing) architecture?</p>
+            <div class="options">
+                <div class="option">A. Simple instructions</div>
+                <div class="option">B. Large instruction set</div>
+                <div class="option">C. High performance</div>
+                <div class="option">D. Register-based operations</div>
+            </div>
+            <div class="answer">
+                <p><strong>Answer:</strong> B. Large instruction set</p>
+            </div>
+            <div class="show-answer">Show Answer</div>
+        </div>
+
+        <!-- Question 4 -->
+        <div class="question">
+            <p>4. What does the term "pipeline" refer to in computer architecture?</p>
+            <div class="options">
+                <div class="option">A. A sequence of data</div>
+                <div class="option">B. A sequence of instructions</div>
+                <div class="option">C. A sequence of bytes</div>
+                <div class="option">D. A sequence of circuits</div>
+            </div>
+            <div class="answer">
+                <p><strong>Answer:</strong> B. A sequence of instructions</p>
+            </div>
+            <div class="show-answer">Show Answer</div>
+        </div>
+        
+        <!-- Add more questions as needed -->
+
+    </div>
+
+    <script>
+        // Script to toggle answer visibility
+        const showAnswerButtons = document.querySelectorAll('.show-answer');
+        showAnswerButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const answer = button.previousElementSibling;
+                answer.style.display = answer.style.display === 'block' ? 'none' : 'block';
+            });
+        });
+    </script>
+</body>
+</html>

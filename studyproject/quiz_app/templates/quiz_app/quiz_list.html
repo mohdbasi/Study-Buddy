@@ -1,0 +1,160 @@
+<!-- quiz_app/templates/quiz_app/quiz_list.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz List</title>
+    <style>
+        /* Style for the quiz list */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .quiz-module {
+            background: linear-gradient(to bottom, #f6c3d2, #4597ec);
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin: 20px auto;
+            padding: 20px;
+            max-width: 500px;
+            text-align: center;
+        }
+        .quiz-title {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        .quiz-description {
+            font-size: 16px;
+            margin-bottom: 20px;
+            color: #666;
+        }
+        .take-quiz-button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+        }
+        .take-quiz-button:hover {
+            background-color: #0056b3;
+        }
+        body {
+            background: linear-gradient(to bottom, #f6c3d2, #4597ec);
+        }
+        .messages {
+                height: 400px;
+                overflow-y: auto;
+            }
+          .btn {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-top: 10px;
+    font-size: 18px;
+    text-decoration: none;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+    body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+   background: linear-gradient(to bottom, #f6c3d2, #4597ec);
+  }
+
+  .chat-messages {
+    height: 400px;
+    overflow-y: auto;
+  }
+
+  header, footer {
+    background: linear-gradient(to bottom, #f6c3d2);
+    color: #fff;
+    text-align: center;
+    padding: 3px;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .logo {
+    max-width: 150px;
+    height: auto;
+  }
+
+  header {
+    top: 0;
+  }
+
+  footer {
+    bottom: 0;
+  }
+    </style>
+</head>
+<body>
+{% load static %}
+    <header style="color: black;">
+            <img src="{% static 'images/logo.png' %}" alt="Your Logo" class="logo">
+
+            <div style="flex: 1;"></div>
+            <a href="/signout" class="btn" style="background-color: #28a745;">Log out</a>
+        </header>
+    <div>
+        <h1><center>Quiz List</center></h1>
+        
+        <!-- Operating System Quiz -->
+        <div class="quiz-module">
+            <h2 class="quiz-title">Operating System</h2>
+            <p class="quiz-description">Test your knowledge of operating system concepts.</p>
+            <a href="osquiz" class="take-quiz-button">Take Quiz</a>
+        </div>
+
+        <!-- Computer Organization and Architecture Quiz -->
+        <div class="quiz-module">
+            <h2 class="quiz-title">Computer Organization and Architecture</h2>
+            <p class="quiz-description">Test your understanding of computer organization and architecture.</p>
+            <a href="coaquiz" class="take-quiz-button">Take Quiz</a>
+        </div>
+
+        <!-- Object Oriented Concepts Quiz -->
+        <div class="quiz-module">
+            <center>
+            <h2 class="quiz-title">Object Oriented Concepts</h2>
+            <p class="quiz-description">Assess your knowledge of object-oriented programming principles.</p>
+            <a href="oopquiz" class="take-quiz-button">Take Quiz</a>
+            </center>
+        </div>
+
+        <!-- Dynamic quizzes from the database -->
+        <ul>
+            {% for quiz in quizzes %}
+                <li>
+                    <h3>{{ quiz.title }}</h3>
+                    <p>{{ quiz.description }}</p>
+                    <a href="{% url 'quiz_detail' quiz.id %}" class="take-quiz-button">Take Quiz</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>

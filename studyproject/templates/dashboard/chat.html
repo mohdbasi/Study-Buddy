@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom, #f6c3d2, #4597ec);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .chat-container {
+            width: 400px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        .chat-header {
+            background-color: #007bff;
+            color: #fff;
+            padding: 15px;
+            text-align: center;
+            font-size: 18px;
+            border-bottom: 1px solid #ccc;
+        }
+        .chat-box {
+            height: 300px;
+            overflow-y: auto;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        .chat-message {
+            background-color: #f2f2f2;
+            border-radius: 10px;
+            padding: 10px;
+            margin-bottom: 10px;
+            max-width: 80%;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+        .input-box {
+            display: flex;
+            border-top: 1px solid #ccc;
+            padding: 10px;
+        }
+        .input-box select {
+            flex: 1;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            outline: none;
+        }
+        .input-box input[type="text"] {
+            flex: 1;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            outline: none;
+            margin-left: 10px;
+        }
+        .input-box button {
+            padding: 8px 15px;
+            border: none;
+            background-color: #007bff;
+            color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+            outline: none;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-header">CHAT</div>
+        <div class="chat-box" id="chatBox">
+            <!-- Messages will be displayed here -->
+        </div>
+        <div class="input-box">
+            <select id="recipientSelect">
+                <!-- Dropdown options will be populated dynamically -->
+            </select>
+            <input type="text" id="messageInput" placeholder="Type your message...">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <script>
+        // Access the room name passed from Django
+        const roomName = 'Messages'; // This will be replaced by the actual room name
+        const wsScheme = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
+        const wsPath = `${wsScheme}${window.location.host}/ws/chat/${roomName}/`;
+
+        const chatSocket = new WebSocket(wsPath);
+
+        chatSocket.onmessage = function (e) {
+            const data = JSON.parse(e.data);
+            appendMessageToChat(data.message);
+        };
+
+        // Fetch recipients and populate the dropdown
+        async function fetchRecipients() {
+            try {
+                const response = await fetch('/get_recipients'); // Replace with your endpoint URL
+                const data = await response.json();
+                const recipientSelect = document.getElementById('recipientSelect');
+                data.forEach(recipient => {
+                    const option = document.createElement('option');
+                    option.value = recipient.id;
+                    option.text = recipient.username; // Replace with your recipient field
+                    recipientSelect.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Error fetching recipients:', error);
+            }
+        }
+
+        // Call the fetchRecipients function when the page loads
+        window.onload = fetchRecipients;
+
+        // Function to send a message
+        function sendMessage() {
+            const recipientId = document.getElementById('recipientSelect').value;
+            const messageInput = document.getElementById('messageInput');
+            const message = messageInput.value.trim();
+            if (message !== '') {
+                const data = {
+                    'type': 'chat.message',
+                    'recipientId': recipientId,
+                    'message': message
+                };
+                chatSocket.send(JSON.stringify(data));
+                messageInput.value = ''; // Clear the input field
+            }
+        }
+
+        // Function to append a message to the chat box
+        function appendMessageToChat(message) {
+            const chatBox = document.getElementById('chatBox');
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('chat-message');
+            messageElement.textContent = message;
+            chatBox.appendChild(messageElement);
+        }
+    </script>
+</body>
+</html>

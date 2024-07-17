@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign Up Page</title>
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(to right bottom, #f6c3d2, #4597ec);
+  }
+
+  .signup-container {
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    width: 320px;
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: opacity 0.5s ease, transform 0.5s ease, background-color 1s ease;
+    color: #fff;
+    animation: pulse 2s infinite alternate;
+  }
+
+  .signup-container.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .signup-container.show .signup-form {
+    animation: slideIn 0.5s ease forwards;
+  }
+
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .signup-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #fff;
+    font-size: 24px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .signup-form input,
+  .signup-form select {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: none;
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-size: 16px;
+    background-color: rgba(255, 255, 255, 0.7);
+    color: #333;
+    transition: background-color 0.3s ease;
+  }
+
+  .signup-form input:focus,
+  .signup-form select:focus {
+    background-color: rgba(255, 255, 255, 0.9);
+  }
+
+  .signup-form button {
+    width: 100%;
+    background-color: #ff7f50;
+    color: #fff;
+    border: none;
+    padding: 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: background-color 0.3s ease, opacity 0.5s ease;
+    opacity: 1; /* Ensure the button is visible initially */
+  }
+
+  .signup-form button:hover {
+    background-color: #ff6348;
+  }
+
+  .signup-form .login-link {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+  }
+
+  .signup-form .login-link a {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .signup-form .login-link a:hover {
+    color: #f0f0f0;
+  }
+
+  @keyframes pulse {
+    from {
+      transform: scale(1);
+    }
+    to {
+      transform: scale(1.05);
+    }
+  }
+</style>
+</head>
+<body>
+  <div class="signup-container">
+    <h2>Sign Up</h2>
+    <form class="signup-form" action="/signup" method="post">
+    {% csrf_token %}  
+      
+      <input type="text" id="username" name="username" placeholder="Username" required>
+      <input type="text" id="fname" name="fname" placeholder="First Name" required>
+      <input type="text" id="lname" name="lname" placeholder="Last Name" required>
+
+      <select id="gender" name="gender" required>
+        <option value="" disabled selected>Select Gender</option>
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+      </select>
+
+      <input type="email" id="email" name="email" placeholder="Email Address" required>
+
+      <input type="password" id="pass1" name="pass1" placeholder="Create Password" required>
+      
+      <input type="password" id="pass2" name="pass2" placeholder="Confirm Password" required>
+
+      <button type="submit">Sign Up</button>
+    </form>
+    <div class="login-link">
+      Already have an account? <a href="/signin">Sign In</a>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      document.querySelector(".signup-container").classList.add("show");
+      document.querySelector(".signup-form").classList.add("show");
+    });
+  </script>
+</body>
+</html>

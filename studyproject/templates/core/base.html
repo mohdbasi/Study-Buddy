@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>{% block title %}{% endblock %}STUDY BUDDY</title>
+
+        <script src="https://cdn.tailwindcss.com"></script>
+
+        <style>
+            .messages {
+                height: 400px;
+                overflow-y: auto;
+            }
+          .btn {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-top: 10px;
+    font-size: 18px;
+    text-decoration: none;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+    body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background: linear-gradient(to bottom, #f6c3d2, #4597ec);
+  }
+
+  .chat-messages {
+    height: 400px;
+    overflow-y: auto;
+  }
+
+  header, footer {
+    background: linear-gradient(to bottom, #f6c3d2);
+    color: #fff;
+    text-align: center;
+    padding: 3px;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .logo {
+    max-width: 150px;
+    height: auto;
+  }
+
+  header {
+    top: 0;
+  }
+
+  footer {
+    bottom: 0;
+  }
+        
+            
+            
+        </style>
+    </head>
+    {% load static %}
+    <body class="bg-teal-600">
+        <header style="color: black;">
+            <img src="{% static 'images/logo.png' %}" alt="Your Logo" class="logo">
+
+            <div style="flex: 1;"></div>
+            <a href="/signout" class="btn" style="background-color: #28a745;">Log out</a>
+        </header>
+
+        {% block content %}
+        {% endblock %}
+
+        {% block scripts %}
+        {% endblock %}
+    </body>
+</html>

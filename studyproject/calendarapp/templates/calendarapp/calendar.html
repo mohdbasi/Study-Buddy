@@ -1,0 +1,137 @@
+<!-- calendarapp/templates/calendarapp/calendar.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Event Calendar</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background: linear-gradient(to bottom, #f6c3d2, #4597ec);
+        }
+        .messages {
+                height: 400px;
+                overflow-y: auto;
+            }
+          .btn {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-top: 10px;
+    font-size: 18px;
+    text-decoration: none;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+    body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+   background: linear-gradient(to bottom, #f6c3d2, #4597ec);
+  }
+
+  .chat-messages {
+    height: 400px;
+    overflow-y: auto;
+  }
+
+  header, footer {
+    background: linear-gradient(to bottom, #f6c3d2);
+    color: #fff;
+    text-align: center;
+    padding: 3px;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .logo {
+    max-width: 150px;
+    height: auto;
+  }
+
+  header {
+    top: 0;
+  }
+
+  footer {
+    bottom: 0;
+  }
+    </style>
+
+</head>
+<body>
+ {% load static %}
+    <header style="color: black;">
+            <img src="{% static 'images/logo.png' %}" alt="Your Logo" class="logo">
+
+            <div style="flex: 1;"></div>
+            <a href="/signout" class="btn" style="background-color: #28a745;">Log out</a>
+        </header>
+    <h1><center>Event Calendar</center></h1>
+    <div id='calendar'></div>
+
+    <!-- Event Creation Form (Hidden by default) -->
+    <div id="eventForm" style="display: none;">
+        <h2>Create Event</h2>
+        <form id="createForm" method="post" action="{% url 'create_event' %}">
+            {% csrf_token %}
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title"><br>
+            <label for="start_date">Start Date:</label>
+            <input type="datetime-local" id="start_date" name="start_date"><br>
+            <label for="end_date">End Date:</label>
+            <input type="datetime-local" id="end_date" name="end_date"><br>
+            <button type="submit">Create Event</button>
+        </form>
+    </div>
+    <a href="{% url 'create_event' %}" class="btn"><center>Create Event</center></a>
+    <script>
+        $(document).ready(function() {
+            $('#calendar').fullCalendar({
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'month,basicWeek,basicDay'
+                },
+                dayClick: function(date, jsEvent, view) {
+    console.log("Day clicked:", date.format()); // Debugging statement
+    // When a day is clicked, show the event creation form
+    $('#start_date').val(date.format()); // Set start date
+    $('#end_date').val(date.format());   // Set end date
+    $('#eventForm').show();
+},
+
+                events: [
+                    {% for event in events %}
+                        {
+                            title: '{{ event.title }}',
+                            start: '{{ event.start_date|date:"Y-m-dTH:i" }}',
+                            end: '{{ event.end_date|date:"Y-m-dTH:i" }}'
+                        },
+                    {% endfor %}
+                ]
+            });
+
+            // Hide event form when clicking outside of it
+            $(document).on('click', function(e) {
+                if (!$(e.target).closest('#eventForm').length && !$(e.target).is('#eventForm')) {
+                    $('#eventForm').hide();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

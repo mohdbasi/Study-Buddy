@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Event</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f6f6f6;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom, #f6c3d2, #4597ec);
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 200px auto; /* Move the form downwards */
+            padding: 20px;
+            background: linear-gradient(to bottom, #f6c3d2, #4597ec);
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        label {
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        input[type="text"],
+        input[type="datetime-local"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        button[type="submit"] {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        .btn {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-top: 10px;
+    font-size: 18px;
+    text-decoration: none;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  .logo {
+    max-width: 150px;
+    height: auto;
+  }
+  header, footer {
+    background: linear-gradient(to bottom, #f6c3d2);
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+    width: 100%;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  header {
+    top: 0;
+    position: fixed;
+  }
+
+  footer {
+    bottom: 0;
+    position: fixed;
+  }
+    </style>
+</head>
+<body>
+{% load static %}
+    <header style="color: black;">
+            <img src="{% static 'images/logo.png' %}" alt="Your Logo" class="logo">
+
+            <div style="flex: 1;"></div>
+            <a href="/signout" class="btn" style="background-color: #28a745;">Log out</a>
+        </header>
+    <div class="container">
+        <h1>Create Event</h1>
+        <form method="post">
+            {% csrf_token %}
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title" placeholder="Enter event title">
+
+            <label for="start_date">Start Date:</label>
+            <input type="datetime-local" id="start_date" name="start_date">
+
+            <label for="end_date">End Date:</label>
+            <input type="datetime-local" id="end_date" name="end_date">
+
+            <button type="submit">Save Event</button>
+        </form>
+    </div>
+</body>
+</html>

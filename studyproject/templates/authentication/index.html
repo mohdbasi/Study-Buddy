@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Home Page</title>
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden; /* Hide overflow to prevent scrolling */
+    background: linear-gradient(to bottom, #f6c3d2, #4597ec);
+    animation: animateBackground 10s linear infinite alternate;
+  }
+
+  @keyframes animateBackground {
+    0% {
+      background-position: 0 0;
+    }
+    100% {
+      background-position: 0 100%;
+    }
+  }
+
+  .container {
+    text-align: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  h1 {
+    color: #333;
+    font-size: 36px;
+    margin-bottom: 10px;
+  }
+
+  h2 {
+    color: #555;
+    font-size: 20px;
+    font-style: italic;
+    margin-top: 0;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 10px;
+    font-size: 18px;
+    text-decoration: none;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .btn:hover {
+    background-color: #0056b3;
+  }
+
+  .message {
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+    opacity: 0;
+    transform: translateY(-20px);
+    animation: slideIn 0.5s ease forwards, fadeOut 3s 1s forwards;
+  }
+
+  .message-text {
+    display: inline-block;
+    color: #fff;
+    font-weight: bold;
+  }
+
+  .alert-success {
+    background-color: #28a745;
+  }
+
+  .alert-info {
+    background-color: #17a2b8;
+  }
+
+  .alert-warning {
+    background-color: #ffc107;
+  }
+
+  .alert-danger {
+    background-color: #dc3545;
+  }
+
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeOut {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+
+</style>
+</head>
+<body>
+
+{% load static %} <!-- Load the static template tags -->
+
+<div class="container">
+    <img src="{% static 'images/logo.png' %}" alt="Logo">
+    {% if user.is_authenticated %}
+        <h3 style="color: #333;">Hello {{ fname }}</h3>
+        <h4 style="color: #555;"> You are successfully logged in!</h4>
+        <a href="/main" class="btn" style="background-color: #28a745;">Home</a>
+        <a href="/signout" class="btn" style="background-color: #28a745;">Sign Out</a>
+    {% else %}
+        <h1 style="color: #333;">StudyBuddy</h1>
+        <h2 style="color: #555;">Your Personal Study Companion</h2>
+        <a href="/signup" class="btn" style="background-color: #007bff;">Sign Up</a>
+        <a href="/signin" class="btn" style="background-color: #007bff;">Sign In</a>
+    {% endif %}
+    
+    {% for message in messages %}
+    <div class="message alert alert-{{ message.tags }} fade show" role="alert">
+        <span class="message-text">{{ message }}</span>
+    </div>
+    {% endfor %}
+</div>
+
+<script src="" async defer></script>
+
+</body>
+</html>

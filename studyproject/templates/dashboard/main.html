@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Welcome Home</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background: linear-gradient(to bottom, #f6c3d2, #4597ec);
+  }
+
+  header, footer {
+    background: linear-gradient(to bottom, #4597ec);
+    color: #fff;
+    text-align: center;
+    padding: 3px;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .logo {
+    max-width: 150px;
+    height: auto;
+  }
+
+  header {
+    top: 0;
+  }
+
+  footer {
+    bottom: 0;
+  }
+
+  .container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    padding-top: 13vh; /* Adjust to accommodate fixed header */
+    padding-bottom: 5vh; /* Adjust to accommodate fixed footer */
+    padding-left: 5vw; /* Adjust to make container smaller */
+    padding-right: 5vw; /* Adjust to make container smaller */
+  }
+
+  .module {
+    flex: 0 1 calc(30% - 20px); /* Adjust module width */
+    margin: 10px;
+    padding: 20px;
+    background: linear-gradient(to bottom, #f6c3d2);
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-height: calc(33.33vh 10px); /* Adjust module height */
+    overflow: hidden;
+  }
+
+  .module img {
+    max-width: 40%;
+    height: auto;
+    margin-bottom: 10px;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-top: 10px;
+    font-size: 18px;
+    text-decoration: none;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .btn:hover {
+    background-color: #0056b3;
+  }
+
+  .message {
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+    opacity: 0;
+    transform: translateY(-20px);
+    animation: slideIn 0.5s ease forwards, fadeOut 3s 1s forwards;
+  }
+
+  .message-text {
+    display: inline-block;
+    color: #fff;
+    font-weight: bold;
+  }
+
+  .alert-success {
+    background-color: #28a745;
+  }
+
+  .alert-info {
+    background-color: #17a2b8;
+  }
+
+  .alert-warning {
+    background-color: #ffc107;
+  }
+
+  .alert-danger {
+    background-color: #dc3545;
+  }
+
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeOut {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+</style>
+</head>
+<body>
+{% load static %}
+<header style="color: black;">
+  <img src="{% static 'images/logo.png' %}" alt="Your Logo" class="logo">
+  <h4 style="margin-right: 10px;">Welcome Back, {{ fname }}!</h4>
+  <div style="flex: 1;"></div>
+  <a href="/signout" class="btn" style="background-color: #28a745;">Log out</a>
+</header>
+
+<div class="container">
+  <div class="module">
+    <img src="{% static 'images/progress.png' %}" alt="Progress Track">
+    <h3>Progress Track</h3>
+    <a href="progress" class="btn">View Progress</a>
+  </div>
+  <div class="module">
+    <img src="{% static 'images/chat.png' %}" alt="Chat">
+    <h3>Chat</h3>
+    <a href="rooms" class="btn">Start Chat</a>
+  </div>
+  <div class="module">
+    <img src="{% static 'images/search.png' %}" alt="Search and Discovery">
+    <h3>Search and Discovery</h3>
+    <a href="search" class="btn">Discover</a>
+  </div>
+  <div class="module">
+    <img src="{% static 'images/sharing.png' %}" alt="Resource Sharing">
+    <h3>Resource Sharing</h3>
+    <a href="resources" class="btn">Share Resources</a>
+  </div>
+  <div class="module">
+    <img src="{% static 'images/quiz.png' %}" alt="Quiz and Assessment">
+    <h3>Quiz and Assessment</h3>
+    <a href="quiz" class="btn">Take Quiz</a>
+  </div>
+  <div class="module">
+    <img src="{% static 'images/calender.png' %}" alt="Event Calendar">
+    <h3>Event Calendar</h3>
+    <a href="calender" class="btn">View Events</a>
+  </div>
+
+  {% for message in messages %}
+    <div class="message alert alert-{{ message.tags }} fade show" role="alert">
+        <span class="message-text">{{ message }}</span>
+    </div>
+  {% endfor %}  
+</div>
+
+<footer>
+</footer>
+    
+</body>
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Resource List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom, #f6c3d2);
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 200px;
+            background: linear-gradient(to bottom, #f6c3d2);
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin-bottom: 10px;
+            background-color: #f9f9f9;
+            border-radius: 6px;
+            padding: 10px;
+            transition: background-color 0.3s ease;
+        }
+        li:hover {
+            background-color: #e9e9e9;
+        }
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .upload-btn {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+        }
+        .upload-btn a {
+            display: inline-block;
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+        .upload-btn a:hover {
+            background-color: #0056b3;
+        }
+        .btn {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-top: 10px;
+    font-size: 18px;
+    text-decoration: none;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+    body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background: linear-gradient(to bottom, #f6c3d2, #4597ec);
+  }
+
+  .chat-messages {
+    height: 400px;
+    overflow-y: auto;
+  }
+
+  header, footer {
+    background: linear-gradient(to bottom, #f6c3d2);
+    color: #fff;
+    text-align: center;
+    padding: 3px;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .logo {
+    max-width: 150px;
+    height: auto;
+  }
+
+  header {
+    top: 0;
+  }
+
+  footer {
+    bottom: 0;
+  }
+        
+    </style>
+</head>
+<body>
+{% load static %}
+    <body class="bg-teal-600">
+        <header style="color: black;">
+            <img src="{% static 'images/logo.png' %}" alt="Your Logo" class="logo">
+
+            <div style="flex: 1;"></div>
+            <a href="/signout" class="btn" style="background-color: #28a745;">Log out</a>
+        </header>
+    <div class="container">
+        <h1>Resource List</h1>
+        <ul>
+            {% for resource in resources %}
+                <li>
+                    <a href="{% url 'download_resource' resource.id %}">
+                        {{ resource.name }}
+                    </a>
+                </li>
+            {% empty %}
+                <li>No resources available.</li>
+            {% endfor %}
+        </ul>
+        <div class="upload-btn">
+            <a href="{% url 'upload_resource' %}">Upload Resource</a>
+        </div>
+    </div>
+</body>
+</html>
